@@ -22,3 +22,6 @@ websocketd --port=8080 ./server.bash
 sudo websocketd --ssl -sslcert=/etc/letsencrypt/live/$DOMAIN/cert.pem
 --sslkey=/etc/letsencrypt/live/$DOMAIN/privkey.pem --port=8080 ./server.bash
 ```
+
+
+[websocketd]: https://github.com/joewalnes/websocketd
