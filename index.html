@@ -1,12 +1,62 @@
-<style>*{font:inherit;font-family:monospace;font-size:12pt;margin:0;padding:0;outline:none;border:0;background:#111;color:#fff}
-input{padding:0.5em 0.8em}
-body{display:flex;flex-direction:column;height:100vh;width:100vw}
-form{display:flex;width:100vw}
-#l,#i{flex:1}
-#l{padding:0.5em;border-bottom:solid 1px #333}</style>
-<script>a=m=>{v=d.createElement('div');v.innerText=m;l.appendChild(v)}
-w=window;d=document;q=d.querySelector.bind(d)
-w.onload=()=>{i=q("#i");b=()=>i.focus();b();l=q("#l");i.onblur=b
-	q("#f").onsubmit=(e)=>{k.send(i.value);i.value="";e.preventDefault()}
-	k=new WebSocket('ws://'+w.location.host+':8080');k.onmessage=e=>a((e.data==""?"|":e.data))}</script>
-<div id="l"></div><form id="f"><input id="i"><input type="submit" value="Send"></form>
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Teeny Chat by @lytedev</title>
+		<style>
+			* {
+				font: 12pt monospace;
+				margin: 0;
+				padding: 0;
+				border: 0;
+				background: #111;
+				color: #fff;
+			}
+			body {
+				display: flex;
+				flex-direction: column;
+				height: 100vh;
+				width: 100vw;
+			}
+			form {
+				display: flex;
+				width: 100vw;
+			}
+			input { padding: 0.5em 0.8em; }
+			#log, #input { flex: 1; }
+			#log {
+				padding:0.5em;
+				border-bottom:solid 1px #333;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="log"></div>
+		<form id="form">
+			<input id="input"/>
+			<input type="submit" value="Send"/>
+		</form>
+		<script>
+			var addMessage = msg => log.appendChild(document.createElement('div')).innerText = msg
+			window.onload = () => {
+				var socket = null
+				var input = document.getElementById("input")
+				focusInput = () => input.focus()
+				focusInput()
+				input.onblur = focusInput
+
+				document.getElementById("form").onsubmit = (e) => {
+					socket && socket.readyState == 1 && socket.send(input.value)
+					input.value = ""
+					e.preventDefault()
+				}
+
+				socketProtocol = 'ws' + (window.location.protocol == "https:" ? "s" : "") + '://'
+				socket = new WebSocket(socketProtocol + window.location.host + ':8080')
+				socket.onmessage = e => addMessage(e.data == "" ? "|" : e.data)
+			}
+		</script>
+	</body>
+</html>
+
