@@ -1,0 +1,12 @@
+<style>*{font:inherit;font-family:monospace;font-size:12pt;margin:0;padding:0;outline:none;border:0;background:#111;color:#fff}
+input{padding:0.5em 0.8em}
+body{display:flex;flex-direction:column;height:100vh;width:100vw}
+form{display:flex;width:100vw}
+#l,#i{flex:1}
+#l{padding:0.5em;border-bottom:solid 1px #333}</style>
+<script>a=m=>{v=d.createElement('div');v.innerText=m;l.appendChild(v)}
+w=window;d=document;q=d.querySelector.bind(d)
+w.onload=()=>{i=q("#i");b=()=>i.focus();b();l=q("#l");i.onblur=b
+	q("#f").onsubmit=(e)=>{k.send(i.value);i.value="";e.preventDefault()}
+	k=new WebSocket('ws://'+w.location.host+':8080');k.onmessage=e=>a((e.data==""?"|":e.data))}</script>
+<div id="l"></div><form id="f"><input id="i"><input type="submit" value="Send"></form>
