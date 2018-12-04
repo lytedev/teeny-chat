@@ -63,6 +63,8 @@
 				socket = new WebSocket(socketProtocol + window.location.host + ':8080')
 				socket.onmessage = e => addMessage(e.data == "" ? "|" : e.data)
 				socket.onerror = socket.onclose = e => addMessage("Error/Disconnected: " + JSON.stringify(e))
+
+				window.onbeforeunload = () => socket.send("__PART__")
 			}
 		</script>
 	</body>

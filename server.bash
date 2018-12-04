@@ -14,7 +14,9 @@ m "${USER} joined."
 echo -e "Welcome to the chat ${USER}!\\n"
 tail -n 0 -f "$log_file" --pid=$$ &
 while read MSG; do
-	if [ ! -z "$MSG" ] && [ ! "$MSG" = "\n" ]; then
+	if [ "$MSG" = "__PART__" ]; then
+		m "${USER} left.";
+	elif [ ! -z "$MSG" ] && [ ! "$MSG" = "\n" ]; then
 		m "${USER}: ${MSG}";
 	fi
 done
