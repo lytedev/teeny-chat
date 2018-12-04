@@ -38,7 +38,10 @@
 			<input type="submit" value="Send"/>
 		</form>
 		<script>
-			var addMessage = msg => log.appendChild(document.createElement('div')).innerText = msg
+			var addMessage = msg => {
+				log.appendChild(document.createElement('div')).innerText = msg
+				log.scrollTop = log.scrollHeight;
+			}
 			window.onload = () => {
 				var socket = null
 				var input = document.getElementById("input")
